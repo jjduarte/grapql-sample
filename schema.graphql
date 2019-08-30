@@ -1,0 +1,66 @@
+scalar Date
+
+enum Status {
+  AGUARDANDO
+  FINALIZADO
+  EM_ATENDIMENTO
+}
+
+type Atendimento {
+    id: ID!
+    cliente: Cliente!
+    pet: Pet!
+    servico: Servico!
+    data: Date!
+    status: Status!
+    observacoes: String
+}
+
+type Servico {
+    id: ID!
+    nome: String!
+    preco: Int!
+    descricao: String!
+}
+
+type Pet {
+    id: ID!
+    nome: String!
+    dono: Cliente!
+    tipo: String
+    observacoes: String
+}
+
+type Cliente {
+    id: ID!
+    nome: String!
+    cpf: String!
+    pets: [Pet!]
+}
+
+type Mutation {
+    adicionarCliente(nome: String!, cpf: String!): Cliente!
+    deletaCliente(id: ID!): ID!
+    atualizaCliente(nome: String!, cpf: String!, id: ID!): Cliente!
+    adicionarPet(nome: String!, donoId: Int!, tipo: String, observacoes: String): Pet!
+    atualizaPet(id: ID!, nome: String!, donoId: Int!, tipo: String, observacoes: String): Pet!
+    deletaPet(id: ID!): ID!
+    adicionaServico(nome: String!, preco:Int!, descricao: String!): Servico!
+    deletaServico(id: ID!): ID!
+    atualizaServico(id: ID!, nome: String!, preco:Int!, descricao: String!): Servico!
+    adicionaAtendimento(cliente: Int!, pet: Int!, servico: Int!, status: Status, observacoes: String): Atendimento!
+    atualizaAtendimento(id: ID!, clienteId: Int!, petId: Int!, servicoId: Int!, status: Status, observacoes: String): Atendimento!
+    deletaAtendimento(id: ID!): ID!
+}
+
+type Query {
+    status: String!
+    clientes: [Cliente!]!
+    cliente(id: ID!): Cliente!
+    pets: [Pet!]!
+    pet(id: ID!): Pet!
+    servicos: [Servico!]!
+    servico(id: ID!): Servico!
+    atendimentos: [Atendimento!]!
+    atendimento(id: ID!): Atendimento! 
+}
